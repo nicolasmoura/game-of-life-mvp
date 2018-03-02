@@ -47,6 +47,4 @@ function draw() {
   let tempGrid = gridA;
   gridA = gridB;
   gridB = tempGrid;
-
-  console.log("matrixCounter: " + matrixCounter);
 }

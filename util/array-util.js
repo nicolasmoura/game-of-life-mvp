@@ -1,11 +1,8 @@
-let matrixCounter = 0;
-
 function generateGrid(cols, rows) {
     let array = new Array(cols);
     for (let i = 0; i < array.length; i++) {
         array[i] = new Array(rows);
     }
-    matrixCounter++;
     return array;
 }
 

@@ -1,24 +1,26 @@
-const resolution = 5;
+const resolution = 10;
 let cols;
 let rows;
-let grid;
+let gridA;
+let gridB;
 
 function setup() {
-  createCanvas(1000, 600);
+  createCanvas(600, 600);
   cols = Math.floor(width / resolution);
   rows = Math.floor(height / resolution);
-  grid = generatePopulatedGrid(cols, rows);
+  gridA = generatePopulatedGrid(cols, rows);
+  gridB = generateGrid(cols, rows);
+  frameRate(5);
 }
 
 function draw() {
   background(0);
-
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       let x = i * resolution;
       let y = j * resolution;
 
-      if (grid[i][j] === 1) {
+      if (gridA[i][j] === 1) {
         fill(255);
         stroke(0);
         rect(x, y, resolution - 1, resolution - 1);
@@ -26,24 +28,25 @@ function draw() {
     }
   }
 
-  let nextGenerationGrid = generateGrid(cols, rows);
-
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid.length; j++) {
-      let neighbors = countNeighbors(grid, i, j);
-      let currentState = grid[i][j];
+  for (let i = 0; i < gridA.length; i++) {
+    for (let j = 0; j < gridA.length; j++) {
+      let neighbors = countNeighbors(gridA, i, j);
+      let currentState = gridA[i][j];
 
       if (currentState === 0 && neighbors === 3) {
-        nextGenerationGrid[i][j] = 1;
+        gridB[i][j] = 1;
       } else if (currentState === 1 && (neighbors < 2 || neighbors > 3)) {
-        nextGenerationGrid[i][j] = 0;
+        gridB[i][j] = 0;
       } else {
-        nextGenerationGrid[i][j] = currentState;
+        gridB[i][j] = currentState;
       }
       
     }
   }
-  
-  grid = nextGenerationGrid;
 
+  let tempGrid = gridA;
+  gridA = gridB;
+  gridB = tempGrid;
+
+  console.log("matrixCounter: " + matrixCounter);
 }
